@@ -7,6 +7,7 @@ import numpy as np
 import torch
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
+import torch.backends.cudnn as cudnn
 import util as utils
 from dataset import Metamovie
 from logger import Logger
@@ -252,6 +253,18 @@ def evaluate_test(args, model,  dataloader):
 if __name__ == '__main__':
     args = parse_args()
     torch.cuda.set_device(0)
+    if not torch.cuda.is_available():
+        print('no gpu device available')
+        sys.exit(1)
+  
+    torch.cuda.set_device(0)
+    cudnn.benchmark = True
+    torch.manual_seed(args.seed)
+    cudnn.enabled = True
+    torch.cuda.manual_seed(args.seed)
+    print('gpu device = 0')
+    print("args = %s", args)
+
     if not args.test:
         run(args, num_workers=1, log_interval=100, verbose=True, save_path=None)
     else:
