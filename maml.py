@@ -251,7 +251,6 @@ def evaluate_test(args, model,  dataloader):
 
 if __name__ == '__main__':
     args = parse_args()
-    os.environ('CUDA_VISIBLE_DEVICES') = '0'
     torch.cuda.set_device(0)
     if not args.test:
         run(args, num_workers=1, log_interval=100, verbose=True, save_path=None)
