@@ -50,7 +50,7 @@ def parse_args():
     parser.add_argument('--num_age', type=int, default=7, help='num of workers to use')
     parser.add_argument('--num_occupation', type=int, default=21, help='num of workers to use')
     parser.add_argument('--num_zipcode', type=int, default=3402, help='num of workers to use')
-    
+    parser.add_argument('--test_way', type=str, default='old',  choices=['old', 'new_user', 'new_item', 'new_item_user'], help='test way')
     parser.add_argument('--rerun', action='store_true', default=False,
                         help='Re-run experiment (will override previously saved results)')
 
@@ -274,7 +274,7 @@ if __name__ == '__main__':
         path = '{}/{}_result_files/'.format(code_root, args.task) + mode_path
         logger = utils.load_obj(path)
         model = logger.valid_model[-1]
-        dataloader_test = DataLoader(Metamovie(args,partition='test',test_way='old'),#old, new_user, new_item, new_item_user
+        dataloader_test = DataLoader(Metamovie(args,partition='test',test_way=args.test_way),#old, new_user, new_item, new_item_user
                                      batch_size=1,num_workers=args.num_workers)
         evaluate_test(args, model, dataloader_test)
     # --- settings ---
