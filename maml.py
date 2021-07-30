@@ -252,7 +252,6 @@ def evaluate_test(args, model,  dataloader):
 
 if __name__ == '__main__':
     args = parse_args()
-    torch.cuda.set_device(0)
     if not torch.cuda.is_available():
         print('no gpu device available')
         sys.exit(1)
