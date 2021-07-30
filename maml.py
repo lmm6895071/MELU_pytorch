@@ -99,7 +99,7 @@ def run(args, num_workers=1, log_interval=100, verbose=True, save_path=None):
         x_spt, y_spt, x_qry, y_qry = [],[],[],[]
         iter_counter = 0
         for step, batch in enumerate(dataloader_train):
-            if len(x_spt)<args.tasks_per_metaupdate:
+            if len(x_spt) < args.tasks_per_metaupdate:
                 x_spt.append(batch[0][0].cuda())
                 y_spt.append(batch[1][0].cuda())
                 x_qry.append(batch[2][0].cuda())
@@ -251,6 +251,8 @@ def evaluate_test(args, model,  dataloader):
 
 if __name__ == '__main__':
     args = parse_args()
+    os.environ('CUDA_VISIBLE_DEVICES') = '0'
+    torch.cuda.set_device(0)
     if not args.test:
         run(args, num_workers=1, log_interval=100, verbose=True, save_path=None)
     else:
